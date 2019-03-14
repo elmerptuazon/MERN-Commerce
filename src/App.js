@@ -1,26 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+/*******All Components */
+import ShopContent from "./component/ShopContent";
+import ShopProfile from "./component/ShopProfile";
+import ShopEditContent from "./component/ShopEditContent";
+import ShopEditProfile from "./component/ShopEditProfile";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="container">
+          <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item active">
+                <Link to="/" className="nav-link">
+                  Shop
+                </Link>
+              </li>
+              <li className="nav-item active">
+                <Link to="/profile" className="nav-link">
+                  Profile
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <Route path="/" exact component={ShopContent} />
+          <Route path="/profile" component={ShopProfile} />
+          <Route path="/edit/:id" component={ShopEditContent} />
+          <Route path="/edit/profile/:id" component={ShopEditProfile} />
+        </div>
+      </Router>
     );
   }
 }
