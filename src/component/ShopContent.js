@@ -1,5 +1,13 @@
 import React, { Component } from "react";
 
+const ImagePreview = props => (
+  <div>
+    <img src={props.shop_file} alt="Uploaded File" />
+    <h3>{props.shop_title}</h3>
+    <h4>{props.shop_price}</h4>
+  </div>
+);
+
 class ShopContent extends Component {
   constructor(props) {
     super(props);
@@ -7,11 +15,13 @@ class ShopContent extends Component {
     this.state = {
       shop_title: "",
       shop_price: "",
+      shop_file: null,
       shop_completed: false
     };
 
     this.onChangeShopTitle = this.onChangeShopTitle.bind(this);
     this.onChangeShopPrice = this.onChangeShopPrice.bind(this);
+    this.onChangeShopImage = this.onChangeShopImage.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -27,16 +37,29 @@ class ShopContent extends Component {
     });
   }
 
+  onChangeShopImage(e) {
+    this.setState({
+      shop_file: URL.createObjectURL(e.target.files[0])
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
+
+    this.setState({
+      shop_completed: true
+    });
 
     console.log("Title: " + this.state.shop_title);
     console.log("Price: " + this.state.shop_price);
     console.log("Completed: " + this.state.shop_completed);
+  }
 
+  componentWillUnmount() {
     this.setState({
       shop_title: "",
       shop_price: "",
+      shop_file: null,
       shop_completed: false
     });
   }
@@ -48,7 +71,7 @@ class ShopContent extends Component {
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <div className="btn btn-primary">
-              <input type="file" />
+              <input type="file" onChange={this.onChangeShopImage} />
             </div>
           </div>
           <div className="form-group">
@@ -77,6 +100,13 @@ class ShopContent extends Component {
             />
           </div>
         </form>
+        {this.state.shop_completed && (
+          <ImagePreview
+            shop_file={this.state.shop_file}
+            shop_title={this.state.shop_title}
+            shop_price={this.state.shop_price}
+          />
+        )}
       </div>
     );
   }
