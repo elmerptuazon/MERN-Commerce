@@ -26,11 +26,18 @@ class App extends Component {
                 </Link>
               </li>
             </ul>
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item active">
+                <button className="btn btn-primary" onClick={{ show: true }}>
+                  Log In
+                </button>
+              </li>
+            </ul>
           </nav>
           <Route path="/" exact component={ShopContent} />
           <Route path="/profile" component={ShopProfile} />
-          <Route path="/edit/:id" component={ShopEditContent} />
-          <Route path="/edit/profile/:id" component={ShopEditProfile} />
+          <Route path="/edit" exact component={ShopEditContent} />
+          <Route path="/edit/profile" component={ShopEditProfile} />
         </div>
       </Router>
     );

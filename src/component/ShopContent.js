@@ -1,10 +1,23 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 const ImagePreview = props => (
-  <div>
-    <img src={props.shop_file} alt="Uploaded File" />
-    <h3>{props.shop_title}</h3>
-    <h4>{props.shop_price}</h4>
+  <div className="col-md-3">
+    <Link to="/edit">
+      <img
+        src={props.shop_file}
+        style={{
+          border: 1,
+          borderColor: "black",
+          borderRadius: 4,
+          padding: 5,
+          width: 150
+        }}
+        alt="Uploaded File"
+      />
+      <p>{props.shop_title}</p>
+      <p>{props.shop_price}</p>
+    </Link>
   </div>
 );
 
@@ -22,6 +35,7 @@ class ShopContent extends Component {
     this.onChangeShopTitle = this.onChangeShopTitle.bind(this);
     this.onChangeShopPrice = this.onChangeShopPrice.bind(this);
     this.onChangeShopImage = this.onChangeShopImage.bind(this);
+    this.onHandlePreview = this.onHandlePreview.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -43,7 +57,7 @@ class ShopContent extends Component {
     });
   }
 
-  onSubmit(e) {
+  onHandlePreview(e) {
     e.preventDefault();
 
     this.setState({
@@ -53,6 +67,21 @@ class ShopContent extends Component {
     console.log("Title: " + this.state.shop_title);
     console.log("Price: " + this.state.shop_price);
     console.log("Completed: " + this.state.shop_completed);
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    console.log("Title: " + this.state.shop_title);
+    console.log("Price: " + this.state.shop_price);
+    console.log("Completed: " + this.state.shop_completed);
+
+    this.setState({
+      shop_title: "",
+      shop_price: "",
+      shop_file: null,
+      shop_completed: false
+    });
   }
 
   componentWillUnmount() {
@@ -93,20 +122,27 @@ class ShopContent extends Component {
             />
           </div>
           <div className="form-group">
+            <button onClick={this.onHandlePreview} className="btn btn-primary">
+              Preview
+            </button>
+          </div>
+          <div className="form-group">
             <input
               type="submit"
               value="Submit Item"
-              className="btn btn-primary"
+              className="btn btn-success"
             />
           </div>
         </form>
-        {this.state.shop_completed && (
-          <ImagePreview
-            shop_file={this.state.shop_file}
-            shop_title={this.state.shop_title}
-            shop_price={this.state.shop_price}
-          />
-        )}
+        <div className="row">
+          {this.state.shop_completed && (
+            <ImagePreview
+              shop_file={this.state.shop_file}
+              shop_title={this.state.shop_title}
+              shop_price={this.state.shop_price}
+            />
+          )}
+        </div>
       </div>
     );
   }
