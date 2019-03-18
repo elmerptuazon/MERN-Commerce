@@ -8,7 +8,7 @@ const Shop = () => {
       <td>Sample Title</td>
       <td>Sample Price</td>
       <td>
-        <Link to="/edit/profile">Edit</Link>
+        <Link to="">Edit</Link>
       </td>
     </tr>
   );

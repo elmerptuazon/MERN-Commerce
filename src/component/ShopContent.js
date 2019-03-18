@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ImagePreview = props => (
   <div className="col-md-3">
@@ -76,6 +77,17 @@ class ShopContent extends Component {
     console.log("Price: " + this.state.shop_price);
     console.log("Completed: " + this.state.shop_completed);
 
+    const newShop = {
+      shop_file: this.state.shop_file,
+      shop_title: this.state.shop_title,
+      shop_price: this.state.shop_price,
+      shop_completed: this.state.shop_completed
+    };
+
+    axios
+      .post("http://localhost:4000/shop/edit/profile", newShop)
+      .then(res => console.log(res.data));
+
     this.setState({
       shop_title: "",
       shop_price: "",
@@ -129,8 +141,8 @@ class ShopContent extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Submit Item"
               className="btn btn-success"
+              value="Submit Item"
             />
           </div>
         </form>
