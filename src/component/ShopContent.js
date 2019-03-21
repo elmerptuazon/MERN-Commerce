@@ -95,13 +95,14 @@ class ShopContent extends Component {
 
   onShowShopList() {
     return this.state.shop_getData.map(function(val, i) {
-      var strSlice = val.shop_file.slice(5);
-      console.log(strSlice);
+      console.log(val.shop_file);
       return (
         <tr className="border border-primary">
-          <img src={`data:image/jpeg;base64,${strSlice}`} alt="Sample" />
-          <div>{val.shop_price}</div>
-          <div>{val.shop_title}</div>
+          <td>
+            <img src={`data:image/jpeg;base64,${val.shop_file}`} alt="Sample" />
+            <div>{val.shop_price}</div>
+            <div>{val.shop_title}</div>
+          </td>
         </tr>
       );
     });
@@ -133,7 +134,7 @@ class ShopContent extends Component {
     return (
       <div style={{ marginTop: 20 }}>
         {this.state.shop_getData == "" ? (
-          <div>No Contents Available</div>
+          <div>Please connect to your server</div>
         ) : (
           <div>
             <h3>Add Item</h3>
